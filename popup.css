@@ -1,0 +1,13 @@
+html { width:400px; height:auto;}
+body { width:392px; padding: 4px; margin: 2px; height:auto; }
+h1 { color: #999; text-align: right; padding: 0 6px 0 0; margin: 0 0 5px; font-size: small; border-bottom: 1px solid #ddd; }
+a { font-family: Verdana; font-size:large; text-decoration:none; }
+a:hover { text-decoration: underline }
+a:focus { text-decoration: underline; border: none; }
+::selection { background:#C6FFDE; }
+
+#divFooter { width:100%; margin-top:20px; text-align:right; -webkit-user-select: none;}
+#lnkTips { display: none; color: gray; font-size: xx-small; text-align: right; margin-right: 10px; }
+#lnkCopyForBug { color: blue; font-size: xx-small; text-align: right; cursor: pointer; margin-right: 10px; }
+#lnkMoreInfo { color: blue; font-size: xx-small; text-align: right; cursor: pointer; margin-right: 10px; }
+#lnkAllVersions { width: 100%; color: blue; font-size: xx-small; text-align: right; cursor: pointer; }

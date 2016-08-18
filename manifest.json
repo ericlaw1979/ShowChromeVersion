@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "name": "Chrome Version Indicator",
+  "short_name": "ChromeVersionInfo",
+  "description": "Show Chrome version info",
+  "version": "0.0.0.1",
+  "author": "Eric Lawrence (@ericlaw)",
+
+  "minimum_chrome_version": "48",
+
+  "icons": { 
+     "19": "images/icon19.png"
+  },
+
+  "browser_action": {
+     "default_icon": {
+        "19": "images/icon19.png"
+      },
+   "default_popup": "popup.html",
+   "default_title": "Show version info"
+  },
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+
+  "permissions": [
+    "tabs"
+   ]
+}
