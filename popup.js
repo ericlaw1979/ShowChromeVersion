@@ -3,9 +3,6 @@
 if (typeof chrome.runtime === "undefined") chrome = browser;
 
 document.addEventListener('DOMContentLoaded', function() {
-        const lnkCopyForBug = document.getElementById("lnkCopyForBug");
-        lnkCopyForBug.addEventListener("click", function() { copyForBug(); }, false);
-
         chrome.runtime.getPlatformInfo(function (o) {
             document.getElementById("txtStatus").textContent = 
             /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1] + "\n" +
@@ -18,6 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const lnkAllVersions = document.getElementById("lnkAllVersions");
         lnkAllVersions.addEventListener("click", function() { chrome.tabs.create({url: "https://omahaproxy.appspot.com/"}); }, false);
 
+        const lnkSysInfo = document.getElementById("lnkSysInfo");
+        lnkSysInfo.addEventListener("click", function() { chrome.tabs.create({url: "chrome://system/"}); }, false);
+
+        const lnkCopyForBug = document.getElementById("lnkCopyForBug");
+        lnkCopyForBug.addEventListener("click", function() { copyForBug(); }, false);
 
 }, false);
 
