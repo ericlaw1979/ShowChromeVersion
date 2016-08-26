@@ -37,4 +37,4 @@ try {
         chrome.browserAction.setBadgeText( {text: sMinorVer} );
         chrome.browserAction.setBadgeBackgroundColor({color: myColor});
     }
-} catch (e) { console.log(e); }
+} catch (e) { console.error(e); }
