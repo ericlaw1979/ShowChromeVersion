@@ -3,13 +3,14 @@
   "name": "Show Chrome Version",
   "short_name": "ShowChromeVersion",
   "description": "Show Chrome version info",
-  "version": "0.0.1.0",
+  "version": "0.0.1.1",
   "author": "Eric Lawrence (@ericlaw)",
 
   "minimum_chrome_version": "48",
 
   "icons": { 
-     "48": "images/icon48.png"
+     "48": "images/icon48.png",
+    "128": "images/icon128.png"
   },
 
   "browser_action": {
