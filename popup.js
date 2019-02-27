@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         const lnkMoreInfo = document.getElementById("lnkMoreInfo");
-        lnkMoreInfo.addEventListener("click", function() { chrome.tabs.create({url: "chrome://version/"}); }, false);
+        lnkMoreInfo.addEventListener("click", function() { chrome.tabs.create({url: "chrome://version/?show-variations-cmd"}); }, false);
 
         const lnkAllVersions = document.getElementById("lnkAllVersions");
         lnkAllVersions.addEventListener("click", function() { chrome.tabs.create({url: "https://omahaproxy.appspot.com/"}); }, false);
