@@ -6,5 +6,5 @@ a:hover { text-decoration: underline }
 a:focus { text-decoration: underline; border: none; }
 ::selection { background:#C6FFDE; }
 
-#divFooter { width:100%; margin-top:20px; text-align:right; -webkit-user-select: none;}
-#lnkAllVersions, #lnkCopyForBug, #lnkSysInfo, #lnkMoreInfo { color: blue; font-size: xx-small; text-align: right; cursor: pointer; margin-right: 10px; }
+#divFooter { margin-top:20px; -webkit-user-select: none; display: flex;}
+#lnkAllVersions, #lnkCopyForBug, #lnkSysInfo, #lnkMoreInfo, #lnkRegressionsForThisVersion { color: blue; padding: 5px; font-size: xx-small; text-align: right; cursor: pointer; }
