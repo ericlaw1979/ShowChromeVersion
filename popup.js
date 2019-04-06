@@ -24,12 +24,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const arrVer = / Edg\/([0-9.]+)/.exec(navigator.userAgent);
             let sEdge = (arrVer && arrVer.length > 0) ? arrVer[1] : "";
             if (sEdge) (sEdge = "Edge v" + sEdge + "; Chromium v");
-            let data = sEdge + /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1] + "\n" + JSON.stringify(o);
+            let data = sEdge + /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1] + " | " + o.arch;
             document.getElementById("txtStatus").textContent = data;
 
-            const majorVersion = arrVer[1].match(/(\d{1,3})/g)[0];
+            const majorVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
+            const linkVersion = majorVersion.match(/(\d{1,3})/g)[0];
             const lnlnkRegressionsForThisVersion = document.getElementById("lnkRegressionsForThisVersion");
-            let href = `https://bugs.chromium.org/p/chromium/issues/list?can=2&q=FoundIn%3D${majorVersion}+`;     
+            let href = `https://bugs.chromium.org/p/chromium/issues/list?can=2&q=FoundIn%3D${linkVersion}+`;     
             lnlnkRegressionsForThisVersion.addEventListener("click", function() { chrome.tabs.create({url: href });}, false);
         });
 }, false);
@@ -45,7 +46,4 @@ function copyForBug()
     copyFrom.select();
     document.execCommand('Copy', false, null);
     copyFrom.remove();
-    const lnkCopyForBug = document.getElementById("lnkCopyForBug");
-    lnkCopyForBug.textContent = "copied!";
-    setTimeout(function() { lnkCopyForBug.innerHTML = "Copy"; }, 450);
 }
