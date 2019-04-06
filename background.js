@@ -46,7 +46,7 @@ function updateUI() {
 
         ctx.font = "10px Segoe UI";
         ctx.strokeStyle = myColor;
-        //ctx.fillText(sMajorVer, 3, 9);
+        // Inserts a single space since letter-spacing doesn't work in extensions
         ctx.strokeText(sMajorVer.split("").join(String.fromCharCode(8202)), 2, 9);
         imageData = ctx.getImageData(0, 0, 16, 16);
     }
