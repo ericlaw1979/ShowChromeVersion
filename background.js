@@ -24,18 +24,31 @@ function updateUI() {
        do this in general because on Windows at least, using
        the badge gives us a bit more vertical space. */
 
+        // Draw rect to support dark theme
+        ctx.fillStyle = "#eee";
+        ctx.fillRect(0, 0, 38, 38);
+        ctx.strokeStyle = "#333";
+        ctx.strokeRect(0, 0, 38, 38);
+
         ctx.font = "bold 28px Verdana";
         ctx.fillStyle = myColor;
-        ctx.fillText(sMajorVer, 0, 22);
+        ctx.fillText(sMajorVer, 2, 22);
         ctx.font = "18px Arial Narrow";
-        ctx.fillText(sMinorVer, 3, 38);
+        ctx.fillText(sMinorVer, 2, 38);
         imageData = ctx.getImageData(0, 0, 38, 38);
     }
     else {
-        ctx.font = "14px Verdana";
+        // Draw rect to support dark theme
+        ctx.fillStyle = "#eee";    
+        ctx.fillRect(0, 0, 16, 16);
+        ctx.strokeStyle = "#333";
+        ctx.strokeRect(0, 0, 16, 16);
+
+        ctx.font = "10px Segoe UI Light";
         ctx.strokeStyle = myColor;
-        ctx.strokeText(sMajorVer, 1, 11);
-        imageData = ctx.getImageData(0, 0, 19, 19);
+        //ctx.fillText(sMajorVer, 3, 9);
+        ctx.strokeText(sMajorVer.split("").join(String.fromCharCode(8202)), 2, 9);
+        imageData = ctx.getImageData(0, 0, 16, 16);
     }
 
     try {
