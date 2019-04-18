@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         lnkSysInfo.addEventListener("click", function() { chrome.tabs.create({url: "chrome://system/"}); }, false);
 
         const lnkCopyForBug = document.getElementById("lnkCopyForBug");
-        lnkCopyForBug.addEventListener("click", function() { copyForBug(); }, false);        
+        lnkCopyForBug.addEventListener("click", function() { copyForBug(); }, false);
 
         if (navigator.userAgent.indexOf(" Edg/") > -1) {
           document.getElementById("txtTitle").textContent = "Edge Version";
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 }, false);
 
-function copyForBug() 
+function copyForBug()
 {
     const copyFrom = document.createElement("textarea");
 

@@ -3,4 +3,4 @@ Show Chrome Version shows the Chrome version as a toolbar icon; this is useful f
 
 Now supports the new Chromium-based Microsoft Edge.
 
-Just want to install? Visit the [Chrome Web Store](https://chrome.google.com/webstore/detail/show-chrome-version/lcmpcdnpcjimgbdejflpblmlgjnakhmh?hl=en)
+Just want to install? Visit the [Chrome Web Store](https://chrome.google.com/webstore/detail/show-chrome-version/lcmpcdnpcjimgbdejflpblmlgjnakhmh?hl=en).
