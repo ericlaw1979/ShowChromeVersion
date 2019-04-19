@@ -3,7 +3,7 @@
   "name": "Show Chrome Version",
   "short_name": "ShowChromeVersion",
   "description": "Show Chrome version info",
-  "version": "0.0.3.2",
+  "version": "0.0.3.3",
   "author": "Eric Lawrence (@ericlaw)",
 
   "minimum_chrome_version": "48",
