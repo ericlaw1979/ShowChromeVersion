@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const majorVersion = arrVer[1].match(/(\d{1,3})/g)[0];
             const lnlnkRegressionsForThisVersion = document.getElementById("lnkRegressionsForThisVersion");
-            let href = `https://bugs.chromium.org/p/chromium/issues/list?can=2&q=FoundIn%3D${majorVersion}+`;     
+            let href = `https://bugs.chromium.org/p/chromium/issues/list?can=2&q=FoundIn%3D${majorVersion}+Type%3DBug-Regression`;     
             lnlnkRegressionsForThisVersion.addEventListener("click", function() { chrome.tabs.create({url: href });}, false);
         });
 }, false);
