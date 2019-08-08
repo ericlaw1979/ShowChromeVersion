@@ -2,10 +2,9 @@
   "manifest_version": 2,
   "name": "Show Chrome Version",
   "short_name": "ShowChromeVersion",
-  "description": "Show Chrome version info",
-  "version": "0.0.3.4",
+  "description": "Show browser version information in the toolbar.",
+  "version": "1.0.0.0",
   "author": "Eric Lawrence (@ericlaw)",
-
   "minimum_chrome_version": "48",
 
   "icons": { 
