@@ -48,5 +48,12 @@ function updateUI() {
     } catch (e) { console.error(e); }
 }
 
+// There's a pending update available; user must restart the browser.
+function showUpdateAvailable() {
+  chrome.browserAction.setBadgeBackgroundColor({color: "red"});
+  chrome.browserAction.setBadgeText( {text: "Stale"} );
+}
+
 chrome.runtime.onInstalled.addListener(updateUI);
 chrome.runtime.onStartup.addListener(updateUI);
+chrome.runtime.onBrowserUpdateAvailable.addListener(showUpdateAvailable);
