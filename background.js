@@ -30,6 +30,7 @@ function updateUI() {
         ctx.font = "18px Arial Narrow";
         ctx.fillText(sMinorVer, 3, 38);
         imageData = ctx.getImageData(0, 0, 38, 38);
+        chrome.browserAction.setBadgeText( {text: ""} );
     }
     else {
         ctx.font = "14px Verdana";
