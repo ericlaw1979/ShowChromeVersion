@@ -3,6 +3,7 @@
   "name": "Show Chrome Version",
   "short_name": "ShowChromeVersion",
   "description": "Show browser version information in the toolbar.",
+  "content_security_policy": "default-src 'self'",
   "version": "1.0.0.0",
   "author": "Eric Lawrence (@ericlaw)",
   "minimum_chrome_version": "48",
