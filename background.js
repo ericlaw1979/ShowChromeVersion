@@ -1,8 +1,17 @@
 "use strict"
 
-function updateUI() {
-    let sMajorVer = /Chrome\/([0-9]+)/.exec(navigator.userAgent)[1];
-    let sMinorVer  = /Chrome\/[0-9]+\.[0-9]+\.([0-9]+)/.exec(navigator.userAgent)[1];
+function updateUI(sUA) {
+    console.log('updateUI() was called at ' + new Date());
+    if (!sUA) sUA = navigator.userAgent || 'Chrome/99.99.99.99';
+    console.log(sUA);
+    if (sUA.includes('0.0.0') && navigator.userAgentData) {
+      console.log('UA reduction detected. Use Client Hints instead.');
+      navigator.userAgentData.getHighEntropyValues(['uaFullVersion'])
+        .then(ua => { updateUI((navigator.userAgent.includes(' Edg/') ? 'Edg/' : 'Chrome/') + ua.uaFullVersion); });
+      return;
+    }
+    let sMajorVer = /Chrome\/([0-9]+)/.exec(sUA)[1];
+    let sMinorVer = /Chrome\/[0-9]+\.[0-9]+\.([0-9]+)/.exec(sUA)[1];
     let bIsEdge = false;
 
     if (navigator.userAgent.indexOf(" Edg/") > -1) {
@@ -40,10 +49,11 @@ function updateUI() {
 
 // There's a pending update available; user must restart the browser.
 function showUpdateAvailable() {
+  console.log("showUpdateAvailable was called at " + new Date());
   chrome.browserAction.setBadgeBackgroundColor({color: "red"});
   chrome.browserAction.setBadgeText( {text: "Stale"} );
 }
 
-chrome.runtime.onInstalled.addListener(updateUI);
-chrome.runtime.onStartup.addListener(updateUI);
+chrome.runtime.onInstalled.addListener(() => updateUI());
+chrome.runtime.onStartup.addListener(() => updateUI());
 chrome.runtime.onBrowserUpdateAvailable.addListener(showUpdateAvailable);
