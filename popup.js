@@ -2,9 +2,12 @@
 
 if (typeof chrome.runtime === "undefined") chrome = browser;
 
-function updateUI(sEdge, verChrome) {
+function updateUI(bIsEdge, sFullVersion, verChrome) {
     chrome.runtime.getPlatformInfo(function (o) {
-       let data = sEdge + verChrome + "\n" + JSON.stringify(o, (k,v) => {if (k==="nacl_arch") return undefined; return v; } );
+      let sVersion = sFullVersion;
+      if (bIsEdge) (sVersion = "Edge v" + sVersion + "; Chromium v" + verChrome);
+
+       let data = sVersion + "\n" + JSON.stringify(o, (k,v) => {if (k==="nacl_arch") return undefined; return v; } );
        document.getElementById("txtStatus").textContent = data;
 
        const majorVersion = verChrome.match(/(\d{1,3})/g)[0];
@@ -27,25 +30,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const lnkCopyForBug = document.getElementById("lnkCopyForBug");
     lnkCopyForBug.addEventListener("click", function() { copyForBug(); }, false);
 
-    if (navigator.userAgent.includes(" Edg/")) {
+    let bIsEdge = navigator.userAgent.includes(' Edg/');
+    if (navigator.userAgentData) {
+      for (let brand_version_pair of navigator.userAgentData.brands) {
+        if (brand_version_pair.brand == "Microsoft Edge") bIsEdge = true;
+      }
+    }
+
+    if (bIsEdge) {
       document.getElementById("txtTitle").textContent = "Edge Version";
       document.getElementById("lnkMoreInfo").textContent = "Full Edge Info";
     }
 
-
-    const arrVer = / Edg\/([0-9.]+)/.exec(navigator.userAgent);
-    let sEdge = (arrVer && arrVer.length > 0) ? arrVer[1] : "";
-    if (sEdge) (sEdge = "Edge v" + sEdge + "; Chromium v");
     const verChrome = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
-
-    if (verChrome.includes('0.0.0')) {
-      // Reduced info UA string feature is enabled.
-      navigator.userAgentData.getHighEntropyValues(['uaFullVersion'])
-       .then(ua => { updateUI(sEdge, ua.uaFullVersion); });
-      return;
-    }
-
-    updateUI(sEdge, verChrome);
+    navigator.userAgentData.getHighEntropyValues(['uaFullVersion'])
+      .then(ua => { updateUI(bIsEdge, ua.uaFullVersion, verChrome); });
 }, false);
 
 function copyForBug()
