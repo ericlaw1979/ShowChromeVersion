@@ -42,7 +42,7 @@ function updateUI(sUA) {
     const ctx = canvas.getContext('2d');
 
     var imageData;
-    ctx.font = '14px "Roboto Condensed", Verdana';
+    ctx.font = '14px Verdana';
     ctx.strokeStyle = myColor;
     ctx.strokeText(sMajorVer, 1, 11);
     imageData = ctx.getImageData(0, 0, ctx.measureText(sMajorVer).width+2, 19);
