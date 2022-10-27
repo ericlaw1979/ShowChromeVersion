@@ -48,6 +48,10 @@ function updateUI(sUA) {
 
     // Select color palette based on dark/light theme. Use light colors on
     // Dark Mode and vice-versa.
+    //
+    // TODO: The window object isn't available inside a ServiceWorker, and thus
+    // we cannot easily move from Manifest v2 to Manifest v3 yet.
+    // See https://github.com/w3c/webextensions/issues/229.
     const bDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const arrDarkColors = ["purple", "blue", "green", "black"];
     const arrColors = bDarkMode ? ["fuchsia", "aqua", "lime", "white"]
