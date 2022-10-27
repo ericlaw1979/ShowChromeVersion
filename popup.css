@@ -8,7 +8,7 @@ a:focus { text-decoration: underline; border: none; }
 ::selection { background:#C6FFDE; }
 
 #divFooter { margin-top:20px; -webkit-user-select: none; display: flex;}
-#txtStatus { text-align: center; font-family: monospace; font-size: large; margin-top: 10px; }
+#txtStatus { text-align: center; font-family: monospace; font-size: large; white-space: pre; margin-top: 10px; }
 #lnkAllVersions, #lnkCopyForBug, #lnkSysInfo, #lnkMoreInfo, #lnkRegressionsForThisVersion { color: blue; padding: 5px; font-size: x-small; text-align: right; cursor: pointer; }
 
 /* Dark mode settings */

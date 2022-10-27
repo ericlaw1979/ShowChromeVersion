@@ -1,27 +1,44 @@
 "use strict"
 
+/*
+* We rely upon the getHighEntropyValues() API[1] to get the full version information
+* which is not otherwise revealed to websites for privacy reasons.
+*
+* [1] https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData/getHighEntropyValues#:~:text=Accept%2DCH%20header.-,fullVersionList,-An%20array%20of
+*/
+
+// Get the version info and call the callback when it's ready.
+function getVersionInfo(cb) {
+  let verPlatform = '0.0.0.0';
+  let verBrowser = '0.0.0.0';
+  let bEdge = false;
+  navigator.userAgentData.getHighEntropyValues(['fullVersionList'])
+        .then(ua => { 
+          ua.fullVersionList.forEach(item=>{
+            if (item.brand==='Chromium') verPlatform = item.version;
+            if (item.brand==='Google Chrome') verBrowser = item.version;
+            if (item.brand==='Microsoft Edge') { verBrowser = item.version; bEdge=true; }
+          });
+          cb({"platform":verPlatform, "browser":verBrowser, "isEdge":bEdge });
+        });
+}
+
 function updateUI(sUA) {
     console.log('updateUI() was called at ' + new Date());
 
-    let bIsEdge = navigator.userAgent.includes(' Edg/');
-    if (navigator.userAgentData) {
-      for (let brand_version_pair of navigator.userAgentData.brands) {
-        if (brand_version_pair.brand == "Microsoft Edge") bIsEdge = true;
-      }
-    }
-
+    // If we didn't get passed a UA, generate a fake one.
     if (!sUA && navigator.userAgentData) {
-      navigator.userAgentData.getHighEntropyValues(['uaFullVersion'])
-        .then(ua => { updateUI((bIsEdge ? 'Edg/' : 'Chrome/') + ua.uaFullVersion); });
+      getVersionInfo(verInfo => { updateUI((verInfo.isEdge ? 'Edg/' : 'Chrome/') + verInfo.browser); });
       return;
     }
 
+    // If we don't have a UA by now, use the UA String (which may be inaccurate).
     if (!sUA) sUA = navigator.userAgent || 'Chrome/99.99.99.99';
     console.log(sUA);
 
     let sMajorVer = "99";
     let sMinorVer = "99";
-    if (bIsEdge) {
+    if (sUA.includes("Edg/")) {
       sMajorVer = /Edg\/([0-9]+)/.exec(sUA)[1];
       sMinorVer  = /Edg\/[0-9]+\.[0-9]+\.([0-9]+)/.exec(sUA)[1];
     } else {
