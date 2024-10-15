@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     lnkMoreInfo.addEventListener("click", function() { chrome.tabs.create({url: "chrome://version/?show-variations-cmd"}); }, false);
 
     const lnkAllVersions = document.getElementById("lnkAllVersions");
-    lnkAllVersions.addEventListener("click", function() { chrome.tabs.create({url: "https://omahaproxy.appspot.com/"}); }, false);
+    lnkAllVersions.addEventListener("click", function() { chrome.tabs.create({url: "https://chromiumdash.appspot.com/"}); }, false);
 
     const lnkSysInfo = document.getElementById("lnkSysInfo");
     lnkSysInfo.addEventListener("click", function() { chrome.tabs.create({url: "chrome://system/"}); }, false);

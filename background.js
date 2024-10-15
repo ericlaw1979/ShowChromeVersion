@@ -23,6 +23,36 @@ function getVersionInfo(cb) {
         });
 }
 
+async function sendMessageToOffscreenDocument(type, data) {
+  // Create an offscreen document if one doesn't exist yet
+  if (!(await hasDocument())) {
+    await chrome.offscreen.createDocument({
+      url: '/offscreen.html',
+      reasons: [chrome.offscreen.Reason.DOM_SCRAPING],
+      justification: 'Need to use CSS media rules to detect Dark mode; also uses a Canvas'
+    });
+  }
+  chrome.runtime.sendMessage({
+    type,
+    target: 'offscreen',
+    data
+  });
+}
+
+async function closeOffscreenDocument() {
+  if (!(await hasDocument())) return;
+  await chrome.offscreen.closeDocument();
+}
+
+async function hasDocument() {
+  // Check all windows controlled by the service worker if one of them is the offscreen document
+  const matchedClients = await clients.matchAll();
+  for (const client of matchedClients) {
+    if (client.url.endsWith('/offscreen.html')) return true;
+  }
+  return false;
+}
+
 function updateUI(sUA) {
     console.log('updateUI() was called at ' + new Date());
 
@@ -46,38 +76,34 @@ function updateUI(sUA) {
       sMinorVer = /Chrome\/[0-9]+\.[0-9]+\.([0-9]+)/.exec(sUA)[1];
     }
 
-    // Select color palette based on dark/light theme. Use light colors on
-    // Dark Mode and vice-versa.
-    //
-    // TODO: The window object isn't available inside a ServiceWorker, and thus
-    // we cannot easily move from Manifest v2 to Manifest v3 yet.
-    // See https://github.com/w3c/webextensions/issues/229.
-    const bDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const arrDarkColors = ["purple", "blue", "green", "black"];
-    const arrColors = bDarkMode ? ["fuchsia", "aqua", "lime", "white"]
-                    : arrDarkColors;
-
-    const myColor = arrColors[sMajorVer % arrColors.length];
-    const myBadgeColor = arrDarkColors[sMajorVer % arrDarkColors.length];
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-
-    var imageData;
-    ctx.font = '14px Verdana';
-    ctx.strokeStyle = myColor;
-    ctx.strokeText(sMajorVer, 1, 11);
-    imageData = ctx.getImageData(0, 0, ctx.measureText(sMajorVer).width+2, 19);
-
+    sendMessageToOffscreenDocument('get-Version-Icon', {'sMajorVer': sMajorVer});
     try {
-        chrome.browserAction.setIcon({ imageData: imageData });
-        chrome.browserAction.setTitle({ title: navigator.userAgent.replace("Mozilla/5.0", "") });
-        chrome.browserAction.setBadgeText( {text: sMinorVer} );
-        chrome.browserAction.setBadgeBackgroundColor({color: myBadgeColor});
+        chrome.action.setTitle({ title: navigator.userAgent.replace('Mozilla/5.0', '') });
+        chrome.action.setBadgeText( {text: sMinorVer} );
     }
     catch (e) { console.error(e); }
 }
 
-// There's a pending update available; user must restart the browser.
+addEventListener("message", async (message) => {
+  // Return early if this message isn't meant for the ServiceWorker. (WAT?)
+  if (message.data.target !== 'serviceworker') return;
+
+  switch (message.data.type) {
+    case 'update-Icon':
+      handleUpdateIcon(message.data.data);
+      closeOffscreenDocument();
+      break;
+    default:
+      console.warn(`Unexpected message type received: '${message.data.type}'.`);
+  }
+});
+
+async function handleUpdateIcon(data) {
+  chrome.action.setBadgeBackgroundColor({color: data.badgeColor});
+  chrome.action.setIcon({imageData: data.imgData});
+}
+
+// There's a pending Browser update available; user should restart the browser.
 function showUpdateAvailable() {
   console.log("showUpdateAvailable was called at " + new Date());
   chrome.browserAction.setBadgeBackgroundColor({color: "red"});

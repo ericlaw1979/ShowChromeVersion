@@ -1,19 +1,18 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Show Chrome Version",
   "short_name": "ShowChromeVersion",
   "description": "Show browser version information in the toolbar.",
-  "content_security_policy": "default-src 'self'",
-  "version": "1.0.6.0",
+  "version": "1.1.0.0",
   "author": "Eric Lawrence (@ericlaw)",
-  "minimum_chrome_version": "105",
+  "minimum_chrome_version": "120",
 
   "icons": {
      "48": "images/icon48.png",
     "128": "images/icon128.png"
   },
 
-  "browser_action": {
+  "action": {
      "default_icon": {
         "38": "images/icon38g.png"
       },
@@ -22,9 +21,8 @@
   },
 
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "service_worker": "background.js"
   },
 
-  "permissions": [ ]
+  "permissions": [ "offscreen" ]
 }
